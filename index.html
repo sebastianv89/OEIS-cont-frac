@@ -36,7 +36,7 @@ function form_submitted(event) {
 
 window.onload = function() {
   document.getElementById("seq_form").onsubmit = form_submitted;
-  windown.onhashchange = show_seq;
+  window.onhashchange = show_seq;
   if (window.location.hash !== "") {
     show_seq();
   }
