@@ -5,23 +5,40 @@
 <title>OEIS continued fractions</title>
 
 <script>
-function show_seq(id) {
+function seq_loaded() {
+  console.log(this.responseTest);
+}
+  
+function seq_load(id) {
+  if (!id.match(/^A\d{6}$/)) {
+    console.error(`Sequence ${id} has the wrong format`);
+    return undefined;
+  }
+  let url = `https://oeis.org/search?q=id:${id}&fmt=json`;
+  
+  let xhr = new XMLHttpRequest();
+  xhr.onload = seq_loaded;
+  xhr.open("GET", url);
+  xhr.send();
+}
+  
+function show_seq() {
+  let seq_id = window.location.hash.substring(1);
+  seq_load(seq_id)
   let div = document.getElementById("cf");
-  div.textContent = id;
+  div.textContent = seq_id;
 }
 
 function form_submitted(event) {
-  console.log(event);
-  let seq_id = document.getElementById("seq_id").value;
-  show_seq(seq_id);
-  window.location.hash = seq_id;
+  window.location.hash = document.getElementById("seq_id").value;
   event.preventDefault(); // don't actually submit the form
 }
 
 window.onload = function() {
   document.getElementById("seq_form").onsubmit = form_submitted;
+  windown.onhashchange = show_seq;
   if (window.location.hash !== "") {
-    show_seq(window.location.hash.substring(1))
+    show_seq();
   }
 };
 
