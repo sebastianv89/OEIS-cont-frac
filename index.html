@@ -11,12 +11,15 @@ function show_seq(id) {
 }
 
 function form_submitted(event) {
-  let input = document.getElementById("seq_id");
-  show_seq(input.value);
+  console.log(event);
+  let seq_id = document.getElementById("seq_id").value;
+  show_seq(seq_id);
+  window.location.hash = seq_id;
   event.preventDefault(); // don't actually submit the form
 }
 
 window.onload = function() {
+  document.getElementById("seq_form").onsubmit = form_submitted;
   if (window.location.hash !== "") {
     show_seq(window.location.hash.substring(1))
   }
@@ -30,7 +33,7 @@ window.onload = function() {
 
 <h1>OEIS continued fractions</h1>
 
-<form onsubmit="form_submitted">
+<form id="seq_form">
   <label for="seq_id">Sequence ID</label>
   <input
     id="seq_id"
