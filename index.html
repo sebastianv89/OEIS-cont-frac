@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>OEIS continued fractions</title>
+
+<script>
+function show_seq(id) {
+  let div = document.getElementById("cf");
+  div.textContent = id;
+}
+
+function form_submitted(event) {
+  let input = document.getElementById("seq_id");
+  show_seq(input.value);
+  event.preventDefault(); // don't actually submit the form
+}
+
+window.onload = function() {
+  if (window.location.hash !== "") {
+    show_seq(window.location.hash.substring(1))
+  }
+};
+
+</script>
+
+</head>
+
+<body>
+
+<h1>OEIS continued fractions</h1>
+
+<form onsubmit="form_submitted">
+  <label for="seq_id">Sequence ID</label>
+  <input
+    id="seq_id"
+    type="text"
+    pattern="A\d{6}"
+    placeholder="A001203"
+    required>
+  <button type="submit">Submit</button>
+</form>
+
+<div id="cf"></div>
+
+</body>
+</html>
